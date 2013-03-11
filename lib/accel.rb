@@ -15,6 +15,7 @@ end
 # Load it
 filepath = File.join(examples_root, "rows.xml")
 book = TemplateSpreadsheet.new(filepath)
-puts book.ast.map(&:inspect)
+# puts book.ast.map(&:inspect)
+puts book.dynamic_cells.map(&:tokens)
 # book.substitute_contents
 # book.write_tempfile(File.join(tmp_root, 'attribute_new.xml'))

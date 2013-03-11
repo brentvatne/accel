@@ -18,7 +18,7 @@ class TemplateSpreadsheet
   end
 
   def substitute_contents
-    # dynamic_cells.each do |cell|
+    # ast.each do |template_call|
     #   key = cell.content.gsub('{{','').gsub('}}','')
     #   cell.content = FakeData.send(key.to_sym)
     # end
@@ -26,15 +26,20 @@ class TemplateSpreadsheet
 
   def ast
     @ast = []
+
     dynamic_cells.each do |cell|
+      # Iterators go straight in (currently, this will change to allow
+      # nesting)
       if cell.iterator?
         @ast << cell
+      # Substitutions can be nested within iterators
       elsif cell.substitution?
         if @ast.last && @ast.last.iterator? && @ast.last.open?
           @ast.last.substitutions << cell
         else
           @ast << cell
         end
+      # Iterators need to be closed
       elsif cell.closer?
         if @ast.last.iterator?
           @ast.last.closer = cell
@@ -43,6 +48,7 @@ class TemplateSpreadsheet
         end
       end
     end
+
     @ast
   end
 
@@ -51,13 +57,26 @@ class TemplateSpreadsheet
       f.write @xml.to_s
     end
   end
+
+  # Duplicate the given 'from' cell to the 'to' cell - does not overwrite the
+  # contents of the 'to' cell, but rather pushes that row and all others down
+  # by one.
+  #
+  # options
+  #   :from -
+  #   :to   -
+  #
+  def duplicate_row(options)
+    # for each row on and after the given from
+    # increase the row number by 1
+  end
 end
 
 class TemplateCell
   attr_accessor :substitutions, :closer, :node
 
   SUBSTITUTION = /^{{[_a-zA-Z]+}}$/
-  ITERATOR     = /^{{#row for (.*)+}}$/
+  ITERATOR     = /^{{#row for all (.*)+}}$/
   CLOSER       = /^{{#end}}$/
 
   def inspect
@@ -77,6 +96,15 @@ class TemplateCell
   def initialize(node)
     @node = node
     @substitutions = []
+  end
+
+  def tokens
+    token_string = content.match(/{{(?<tokens>.*)}}/)[:tokens]
+    token_string.split
+  end
+
+  def key
+    tokens.first
   end
 
   def open?

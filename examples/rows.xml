@@ -15,7 +15,7 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>11720</WindowHeight>
+  <WindowHeight>4200</WindowHeight>
   <WindowWidth>25600</WindowWidth>
   <WindowTopX>0</WindowTopX>
   <WindowTopY>0</WindowTopY>
@@ -31,20 +31,20 @@
    <NumberFormat/>
    <Protection/>
   </Style>
-  <Style ss:ID="s16">
+  <Style ss:ID="s62">
    <Font ss:FontName="Calibri" ss:Size="18" ss:Color="#FFFFFF"/>
    <Interior ss:Color="#000000" ss:Pattern="Solid"/>
   </Style>
-  <Style ss:ID="s17">
+  <Style ss:ID="s63">
    <NumberFormat ss:Format="Short Date"/>
   </Style>
   <Style ss:ID="s64">
-   <NumberFormat ss:Format="&quot;$&quot;#,##0.00"/>
-  </Style>
-  <Style ss:ID="s66">
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"
     ss:Bold="1"/>
    <Interior ss:Color="#A2BD90" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s65">
+   <NumberFormat ss:Format="&quot;$&quot;#,##0.00"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
@@ -53,33 +53,35 @@
    <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="85"/>
    <Column ss:Width="76"/>
    <Column ss:AutoFitWidth="0" ss:Width="109"/>
-   <Row ss:Height="23">
-    <Cell ss:Index="3" ss:StyleID="s16"><Data ss:Type="String">{{title}}</Data></Cell>
+   <Row ss:AutoFitHeight="0" ss:Height="23">
+    <Cell ss:Index="3" ss:StyleID="s62"><Data ss:Type="String">{{title}}</Data></Cell>
    </Row>
-   <Row>
-    <Cell ss:Index="3" ss:StyleID="s17" ss:Formula="=TODAY()"><Data
-      ss:Type="DateTime">2013-03-09T00:00:00.000</Data></Cell>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s63" ss:Formula="=TODAY()"><Data
+      ss:Type="DateTime">2013-03-11T00:00:00.000</Data></Cell>
    </Row>
-   <Row ss:Index="4">
-    <Cell><Data ss:Type="String">{{#row for sales_week in sales_weeks}} </Data></Cell>
+   <Row ss:Index="4" ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">{{#row for all sales_weeks}} </Data></Cell>
    </Row>
-   <Row>
-    <Cell ss:StyleID="s66"><Data ss:Type="String">Week {{i}}</Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">{{total_dollars}}</Data></Cell>
-    <Cell ss:StyleID="s64"><Data ss:Type="String">{{total_units}}</Data></Cell>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s64"><Data ss:Type="String">Week {{i}}</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">{{total_dollars}}</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="String">{{total_units}}</Data></Cell>
     <Cell><Data ss:Type="String">{{average_dollars_per_unit}}</Data></Cell>
    </Row>
-   <Row>
+   <Row ss:AutoFitHeight="0">
     <Cell><Data ss:Type="String">{{#end}}</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Unsynced/>
    <PageLayoutZoom>0</PageLayoutZoom>
    <Selected/>
    <Panes>
     <Pane>
      <Number>3</Number>
      <ActiveRow>6</ActiveRow>
+     <ActiveCol>2</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
